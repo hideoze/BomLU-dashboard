@@ -1,5 +1,5 @@
 window.DASHBOARD_CONFIG = {
-  mode: "demo",
+  mode: "minimal",
   publicOwner: "hideoze",
   publicRepo: "BomLU-dashboard",
   dataBranch: "status-data",
