@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Minimal public experiment status v1",
+  "description": "Allowlist only. No raw task text, private links, host identity, credentials or performance results.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "mode", "observed_at", "published_at", "worker", "resident", "queue", "recent_runs"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "mode": {"enum": ["demo", "minimal"]},
+    "observed_at": {"$ref": "#/$defs/utcTime"},
+    "published_at": {"$ref": "#/$defs/utcTime"},
+    "worker": {
+      "type": "object", "additionalProperties": false,
+      "required": ["alias", "state"],
+      "properties": {
+        "alias": {"type": "string", "pattern": "^lab-[0-9]{2}$"},
+        "state": {"enum": ["unknown", "idle", "busy", "stopped"]}
+      }
+    },
+    "resident": {
+      "type": "object", "additionalProperties": false,
+      "required": ["process_state", "last_request_status", "last_request_at", "residency"],
+      "properties": {
+        "process_state": {"enum": ["unknown", "absent", "running"]},
+        "last_request_status": {"enum": ["not_checked", "passed", "failed"]},
+        "last_request_at": {"$ref": "#/$defs/utcTime"},
+        "residency": {"enum": ["unknown", "process_only", "context_only", "numeric_resident"]}
+      }
+    },
+    "queue": {
+      "type": "object", "additionalProperties": false,
+      "required": ["queued", "running"],
+      "properties": {
+        "queued": {"$ref": "#/$defs/count"},
+        "running": {"$ref": "#/$defs/count"}
+      }
+    },
+    "recent_runs": {
+      "type": "array", "maxItems": 20,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["alias", "kind", "phase", "validation"],
+        "properties": {
+          "alias": {"type": "string", "pattern": "^run-[a-f0-9]{16}$"},
+          "kind": {"enum": ["inspect", "test", "benchmark", "develop"]},
+          "phase": {"enum": ["queued", "running", "completed", "failed", "cancelled", "timed_out", "interrupted"]},
+          "validation": {"enum": ["not_run", "pending", "passed", "failed", "partial", "not_applicable"]}
+        }
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"mode": {"const": "minimal"}}},
+     "then": {"properties": {"observed_at": {"type": "string"}, "published_at": {"type": "string"}}}}
+  ],
+  "$defs": {
+    "count": {"type": ["integer", "null"], "minimum": 0, "maximum": 10000},
+    "utcTime": {
+      "type": ["string", "null"], "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BomLU experiment dashboard">
+  <title>BomLU Experiment Dashboard</title>
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+  <header>
+    <div>
+      <small>BOMLU · EXPERIMENT DASHBOARD</small>
+      <h1>BomLU 实验状态看板</h1>
+    </div>
+    <button id="refresh" type="button">刷新</button>
+  </header>
+
+  <main>
+    <p id="mode-note">正在读取状态...</p>
+
+    <section class="cards">
+      <article>
+        <h2>实验节点</h2>
+        <strong id="lab-status">unknown</strong>
+        <p id="lab-time">暂无数据</p>
+      </article>
+
+      <article>
+        <h2>任务状态</h2>
+        <strong id="task-status">unknown</strong>
+        <p id="task-counts">暂无数据</p>
+      </article>
+
+      <article>
+        <h2>GPU Worker</h2>
+        <strong id="resident-status">unknown</strong>
+        <p id="resident-detail">暂无数据</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>资源摘要</h2>
+      <pre id="metrics">暂无数据</pre>
+    </section>
+
+    <section>
+      <h2>最近实验</h2>
+      <div id="runs">暂无数据</div>
+    </section>
+
+    <section>
+      <h2>项目管理</h2>
+      <p>
+        完整任务、审批和实验报告保留在私有 GitHub 中。
+      </p>
+      <a id="management-link" href="#" target="_blank" rel="noreferrer">
+        打开 GitHub
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    <span id="updated-at">尚未加载</span>
+  </footer>
+
+  <script src="./config.js"></script>
+  <script src="./assets/app.js"></script>
+</body>
+</html>
