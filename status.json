@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "mode": "demo",
+  "observed_at": null,
+  "published_at": null,
+  "worker": {"alias": "lab-01", "state": "unknown"},
+  "resident": {
+    "process_state": "unknown",
+    "last_request_status": "not_checked",
+    "last_request_at": null,
+    "residency": "unknown"
+  },
+  "queue": {"queued": null, "running": null},
+  "recent_runs": []
+}
